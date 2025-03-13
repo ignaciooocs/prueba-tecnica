@@ -1,26 +1,66 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { SignUpDto } from './dto/sign-up.dto';
+import { UserService } from 'src/user/user.service';
+import * as bcrypt from 'bcryptjs';
+import { SignInDto } from './dto/sign-in.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService
+  ) {}
+
+  async signUp(signUpDto: SignUpDto) {
+    try {
+
+      const { email, password } = signUpDto;
+      const user = await this.userService.findByEmail(email);
+
+      if (user) {
+        throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      await this.userService.create({ email, password: hashedPassword });
+
+      return { 
+        ok: true, 
+        message: 'User created successfully', 
+        email 
+      };
+      
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  async signIn(signInDto: SignInDto) {
+    try {
+      const { email, password } = signInDto;
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+      const user = await this.userService.findByEmail(email);
+      if (!user) throw new HttpException('credentials are not valid', HttpStatus.UNAUTHORIZED);
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) throw new HttpException('credentials are not valid', HttpStatus.UNAUTHORIZED);
+    
+      const token = await this.jwtService.signAsync({ id: user.id, email: user.email });
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+      return {
+        ok: true,
+        message: 'User logged in successfully',
+        token,
+        email
+      }
+
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }

@@ -35,6 +35,7 @@ export class UserService {
       if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       return user;
     } catch (error) {
+      if (error instanceof HttpException) throw error;
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
