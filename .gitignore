@@ -54,6 +54,7 @@ lerna-debug.log*
 *.p12
 *.key
 *.mobileprovision
+**/expo-env.d.ts
 
 # === TypeScript ===
 **/*.tsbuildinfo
