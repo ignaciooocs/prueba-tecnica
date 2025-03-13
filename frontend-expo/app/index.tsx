@@ -1,5 +1,5 @@
-import { Text, View } from "react-native";
-
+import { View } from "react-native";
+import { Text } from 'react-native-paper'
 export default function Index() {
   return (
     <View
@@ -9,7 +9,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text className="text-xl font-bold">Edit app/index.tsx to edit this screen.</Text>
+      <Text variant="titleLarge">Edit app/index.tsx to edit this screen.</Text>
     </View>
   );
 }
