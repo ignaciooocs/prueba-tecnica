@@ -20,7 +20,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (!isLoading) {
-      router.replace(session ? "/(home)" : "/(auth)");
+      router.replace(session ? "/(home)/(index)" : "/(auth)");
     }
   }, [session, isLoading]);
 
