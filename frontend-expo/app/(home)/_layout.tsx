@@ -1,4 +1,4 @@
-import { Ionicons, Octicons,  } from "@expo/vector-icons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
 export default function HomeLayout() {
@@ -12,11 +12,18 @@ export default function HomeLayout() {
                 tabBarIcon: ({ color, size }) => <Octicons name="home" size={size} color={color} />,
             }} />
             <Tabs.Screen name="pedidos" options={{
+                 headerStyle: { backgroundColor: "#3b82f6" },
+                 headerTitleAlign: "center",
+                 headerTitleStyle: { color: "white" },
                 tabBarIcon: ({ color, size }) => <Ionicons name="document-text-outline" size={size} color={color} />,
             }} />
             <Tabs.Screen name="ubicaciones" options={{
+                headerStyle: { backgroundColor: "#3b82f6" },
+                headerTitleAlign: "center",
+                headerTitleStyle: { color: "white" },
                 tabBarIcon: ({ color, size }) => <Ionicons name="location-outline" size={size} color={color} />,
             }} />
+
         </Tabs>
     )
 }

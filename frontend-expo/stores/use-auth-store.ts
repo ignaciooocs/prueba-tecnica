@@ -17,7 +17,6 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   checkAuth: async () => {
     const storedToken = await SecureStore.getItemAsync("userToken");
-    console.log(storedToken);
     set({ token: storedToken, session: !!storedToken });
   },
 

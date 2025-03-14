@@ -9,7 +9,7 @@ export default function HomeDrawerLayout() {
             screenOptions={{ 
             headerTitleAlign: "center",
             headerTitleStyle: { color: "white" },
-            headerStyle: { backgroundColor: "#3b82f6", },
+            headerStyle: { backgroundColor: "#3b82f6" },
             headerLeft: () => null,
             drawerPosition: "right",
          }}>
