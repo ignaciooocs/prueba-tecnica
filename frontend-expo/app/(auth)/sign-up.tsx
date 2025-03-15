@@ -30,6 +30,7 @@ export default function SigUp() {
                             <Ionicons name="open-outline" size={20} color="black" />
                         </Button>
                         <Text className="text-gray-700 font-bold text-center mt-6">¿Ya tienes una cuenta? <Link href="/" className="text-blue-500 font-bold">Iniciar Sesión</Link></Text>
+                        <Text className="text-gray-700 font-bold text-center mt-6">¿Necesitas verificar tu cuenta? <Link href="/(auth)/verify-email" className="text-blue-500 font-bold">Hazlo aquí</Link></Text>
                     </View>
 
                 </View>

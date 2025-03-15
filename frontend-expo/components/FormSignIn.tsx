@@ -1,4 +1,4 @@
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Alert } from "react-native";
 import {  HelperText } from "react-native-paper";
 import Button from "./Button";
 import { useState } from "react";
@@ -8,8 +8,10 @@ import { signIn } from "@/services/auth.service";
 import * as SecureStore from "expo-secure-store";
 import InputPasswordIcon from "./InputPasswordIcon";
 import InputField from "./InputField";
+import { useRouter } from "expo-router";
 
 export default function FormSignIn() {
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(true);
     const [errorResponse, setErrorResponse] = useState<string | null>(null);
     const [userInput, setUserInput] = useState<IuserInput>({ email: "", password: "" });
@@ -39,6 +41,9 @@ export default function FormSignIn() {
             if (!response.ok) {
                 setErrorResponse(response.message);
                 setLoading(false);
+                if (response.message === "Debe verificar su correo") {
+                    Alert.alert("Atención", response.message, [{ text: "Verificar", onPress: () => router.navigate("/(auth)/verify-email") }]);
+                }
                 return;
             }
 

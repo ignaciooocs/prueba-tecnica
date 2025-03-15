@@ -44,7 +44,7 @@ export default function FormSignUp() {
                 return;
             }
 
-            Alert.alert("Exito", response.message, [{ text: "OK", onPress: () => router.navigate("/") }]);
+            Alert.alert("Exito", response.message, [{ text: "Verificar", onPress: () => router.navigate("/(auth)/verify-email") }]);
             setLoading(false);
         } catch (error) {
             console.log(error);

@@ -36,3 +36,16 @@ export async function signUp ({email, password }: { email: string, password: str
         return error
     }
 }
+
+export async function verifyEmail(code: string) {
+    try {
+        const response = await fetch(BASE_URL + 'auth/verify-email/' + code, {
+            method: 'POST'
+        })
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
