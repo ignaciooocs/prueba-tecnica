@@ -49,6 +49,15 @@ export class UserService {
     }
   }
 
+  async findByVerificationToken(code: string) {
+    try {
+      const user = await this.userRepository.findOneBy({ verificationToken: code });
+      return user;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
       const user = await this.userRepository.update(id, updateUserDto);

@@ -16,4 +16,9 @@ export class AuthController {
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto);
   }
+
+  @Post('verify-email/:code')
+  verifyEmail(@Param('code') code: string) {
+    return this.authService.verifyEmail(code);
+  }
 }
