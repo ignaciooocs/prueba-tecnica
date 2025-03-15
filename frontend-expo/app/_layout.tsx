@@ -10,7 +10,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   const [isLoading, setIsLoading] = useState(true);
-  const { session, checkAuth } = useAuthStore();
+  const { session, checkAuth, token } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function RootLayout() {
     }
   }, [session, isLoading]);
 
-  if (isLoading) {
+  if (isLoading && token === false) {
     return <SplashScreenComponent onFinish={() => setIsLoading(false)} />;
   }
 

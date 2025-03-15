@@ -5,11 +5,11 @@ import * as SplashScreen from "expo-splash-screen";
 
 const SplashScreenComponent = ({ onFinish }: { onFinish: () => void }) => {
   useEffect(() => {
-    setTimeout(() => {
+    return () => {
       SplashScreen.hideAsync();
-      onFinish();
-    }, 5000);
-  }, []);
+      onFinish()
+    };
+  }, [onFinish])
 
   return (
     <View style={styles.container}>
