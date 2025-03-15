@@ -58,9 +58,31 @@ export class UserService {
     }
   }
 
+  async findByCodePassword(code: string, email: string) {
+    try {
+      const user = await this.findByEmail(email);
+      if (!user) throw new HttpException('No se encontró el email', HttpStatus.NOT_FOUND);
+
+      if (user.resetPasswordToken !== code) throw new HttpException('Código de verificación no valido', HttpStatus.BAD_REQUEST);
+      return user;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
       const user = await this.userRepository.update(id, updateUserDto);
+      return user;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async updatePassword(email: string, password: string) {
+    try {
+      const user = await this.userRepository.update({ email }, { password }); 
       return user;
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);

@@ -20,8 +20,8 @@ export class User {
   @Column({ nullable: true })
   resetPasswordToken: string;
 
-  @Column({ nullable: true, type: 'timestamp' })
-  resetPasswordExpires: Date;
+  @Column({ default: false })
+  isPasswordTokenVerified: boolean;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -4,7 +4,7 @@ export class CreateUserDto {
     isEmailVerified?: boolean;
     verificationToken?: string;
     resetPasswordToken?: string;
-    resetPasswordExpires?: Date;
+    isPasswordTokenVerified?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
 }

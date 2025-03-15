@@ -5,6 +5,9 @@ import * as bcrypt from 'bcryptjs';
 import { SignInDto } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
 import { EmailService } from 'src/email/email.service';
+import { RecoverPasswordDto } from './dto/recover-pasword.dto';
+import { VerifyRecoverPasswordDto } from './dto/verify-recover-password.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -95,4 +98,70 @@ export class AuthService {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
+
+  async recoverPassword(recoverPasswordDto: RecoverPasswordDto) {
+    try {
+      const user = await this.userService.findByEmail(recoverPasswordDto.email);
+      if (!user) throw new HttpException('El correo no es valido', HttpStatus.NOT_FOUND);
+
+      const code = Math.floor(100000 + Math.random() * 900000);
+      const subject = 'Recuperacion de contraseña';
+
+      await this.userService.update(user.id, { resetPasswordToken: code.toString() });
+
+      await this.emailService.sendEmail(recoverPasswordDto.email, subject, code);
+
+      return { 
+        ok: true, 
+        message: 'Se ha enviado un correo con un codigo de verificación', 
+        email: recoverPasswordDto.email 
+      };
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async verifyRecoverPassword(verifyRecoverPasswordDto: VerifyRecoverPasswordDto) {
+    try {
+      const user = await this.userService.findByCodePassword(verifyRecoverPasswordDto.code, verifyRecoverPasswordDto.email);
+      if (!user) throw new HttpException('El codigo de verificacion no es valido', HttpStatus.NOT_FOUND);
+
+      await this.userService.update(user.id, { resetPasswordToken: '', isPasswordTokenVerified: true });
+
+      return {
+        ok: true,
+        message: 'Codigo verificado exitosamente',
+        email: user.email
+      }
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async updatePassword(updatePasswordDto: UpdatePasswordDto) {
+    const { email, password } = updatePasswordDto;
+    try {
+      const user = await this.userService.findByEmail(email);
+      if (!user?.isPasswordTokenVerified) throw new HttpException('Debe verificar su correo', HttpStatus.UNAUTHORIZED);
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      await this.userService.updatePassword(email, hashedPassword);
+
+      await this.userService.update(user.id, { isPasswordTokenVerified: false });
+
+      return {
+        ok: true,
+        message: 'Contraseña actualizada exitosamente',
+      }
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
 }
+
