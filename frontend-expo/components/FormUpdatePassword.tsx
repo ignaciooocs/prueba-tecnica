@@ -42,7 +42,11 @@ export default function FormUpdatePassword() {
             return;
         }
         try {
-            const response = await updatePassword({ email: email as string, password: userInput.password});
+            const response = await updatePassword({ 
+                email: email as string, 
+                password: userInput.password,
+                confirmPassword: userInput.confirmPassword
+            });
             console.log(response);
 
             if (!response.ok) {

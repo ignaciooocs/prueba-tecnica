@@ -88,14 +88,14 @@ export async function verifyPassword({ email, code }: { email: string, code: str
     }
 }
 
-export async function updatePassword({ email, password }: { email: string, password: string }) {
+export async function updatePassword({ email, password, confirmPassword }: { email: string, password: string, confirmPassword: string }) {
     try {
         const response = await fetch(BASE_URL + 'auth/update-password/', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password, confirmPassword })
         })
         const data = await response.json()
         return data
