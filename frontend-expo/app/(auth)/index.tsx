@@ -33,6 +33,7 @@ export default function SignIn() {
                             <Ionicons name="open-outline" size={20} color="black" />
                         </Button>
                         <Text className="text-gray-700 font-bold text-center mt-6">¿Aún no tienes una cuenta? <Link href="/(auth)/sign-up" className="text-blue-500 font-bold">Registrate aquí</Link></Text>
+                        <Text className="text-center mt-6"><Link href="/(auth)/recover-password" className="text-blue-400">¿Olvidaste tu contraseña?</Link></Text>
                     </View>
 
                 </View>
