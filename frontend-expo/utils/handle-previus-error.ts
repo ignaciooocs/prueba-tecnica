@@ -17,8 +17,6 @@ interface Props {
 export function handlePreviousError(
     { userInput, setErrorResponse, isEmailValid, isPasswordValid }: Props
 ) {
-
-
     if (!userInput.email || !userInput.password ) {
         setErrorResponse("Todos los campos son obligatorios");
         return true
@@ -28,7 +26,6 @@ export function handlePreviousError(
         return true
     }
     if (!isPasswordValid) {
-
         return true
     }
 

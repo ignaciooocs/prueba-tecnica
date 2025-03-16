@@ -2,7 +2,7 @@ import { updatePassword } from "@/services/auth.service";
 import { IInput } from "@/utils/handle-previus-error";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, Alert, View } from "react-native";
+import { Alert, View } from "react-native";
 import { HelperText } from "react-native-paper";
 import Button from "./Button";
 import InputField from "./InputField";

@@ -5,7 +5,7 @@ import { verifyEmail } from "@/services/auth.service";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ActivityIndicator, Alert, View } from "react-native";
+import { Alert, View } from "react-native";
 import { HelperText, Text, TextInput } from "react-native-paper";
 
 export default function VerifyEmail() {

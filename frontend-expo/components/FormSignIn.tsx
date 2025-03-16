@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, Alert } from "react-native";
+import { View, Alert } from "react-native";
 import {  HelperText } from "react-native-paper";
 import Button from "./Button";
 import { useState } from "react";
@@ -81,10 +81,8 @@ export default function FormSignIn() {
                 placeholder="Ingresa tu contraseña"
                 secureTextEntry={showPassword}
                 rightIcon={InputPasswordIcon({ showPassword, setShowPassword })}
-                errorMessage={!isPasswordValid && userInput.password.length > 0 ? "La contraseña debe tener al menos 6 caracteres." : ""}
             />
             {<HelperText type="error">{errorResponse}</HelperText>}
-    
     
             {loading && <Loader />}
             
