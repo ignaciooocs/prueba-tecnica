@@ -16,7 +16,9 @@ export default function HomeDrawerLayout() {
             <Drawer.Screen name="index" options={{ 
                 title: "inicio"
              }} />
-            <Drawer.Screen name="profile" />
+            <Drawer.Screen name="profile" options={{
+                title: "perfil"
+            }} />
         </Drawer>
     )
 }

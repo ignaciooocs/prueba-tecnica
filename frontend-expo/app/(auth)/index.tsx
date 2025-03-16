@@ -10,15 +10,15 @@ export default function SignIn() {
 
     return (
         <View className="flex-1 justify-between">
-            <View className="h-2/6 justify-center items-center">
-                <Text variant="headlineLarge" className="text-blue-500 font-bold">
+            <View className="h-[30%] justify-center items-center">
+                <Text variant="displaySmall"  className="text-blue-500 font-bold">
                     Demo
                 </Text>
             </View>
 
-            <View className="h-4/6 items-center bg-white rounded-t-[50px] p-4">
+            <View className="h-[70%] items-center bg-white rounded-t-[50px] p-4">
                 <View className="h-full w-full pt-4 gap-y-6 px-4">
-                    <Text variant="headlineSmall" className="text-gray-700 font-bold text-center mb-4">
+                    <Text variant="headlineSmall" className="text-gray-700 font-bold text-center mb-8">
                         Iniciar Sesión
                     </Text>
 

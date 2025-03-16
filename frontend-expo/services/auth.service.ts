@@ -1,5 +1,5 @@
-const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL as string
-console.log(BASE_URL)
+import { getApiUrl } from "@/utils/get-api-url";
+const BASE_URL = getApiUrl();
 
 export async function signIn ({email, password }: { email: string, password: string }): Promise<any> {
     try {

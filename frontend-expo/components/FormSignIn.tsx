@@ -2,20 +2,21 @@ import { View, ActivityIndicator, Alert } from "react-native";
 import {  HelperText } from "react-native-paper";
 import Button from "./Button";
 import { useState } from "react";
-import { handlePreviousError, IuserInput } from "@/utils/constans";
+import { handlePreviousError, IuserInput } from "@/utils/handle-previus-error";
 import { useAuthStore } from "@/stores/use-auth-store";
 import { signIn } from "@/services/auth.service";
 import * as SecureStore from "expo-secure-store";
 import InputPasswordIcon from "./InputPasswordIcon";
 import InputField from "./InputField";
 import { useRouter } from "expo-router";
+import Loader from "./Loader";
 
 export default function FormSignIn() {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(true);
     const [errorResponse, setErrorResponse] = useState<string | null>(null);
     const [userInput, setUserInput] = useState<IuserInput>({ email: "", password: "" });
-    const { setToken } = useAuthStore();
+    const { setToken, setEmail } = useAuthStore();
     const [loading, setLoading] = useState(false);
 
     // Validaciones
@@ -53,6 +54,7 @@ export default function FormSignIn() {
 
             await SecureStore.setItemAsync("userToken", response.token);
             setToken(response.token);
+            setEmail(response.email);
             setLoading(false);
         } catch (error) {
             console.log(error);
@@ -84,11 +86,8 @@ export default function FormSignIn() {
             {<HelperText type="error">{errorResponse}</HelperText>}
     
     
-            {loading && (
-                <View className="flex-row justify-center items-center">
-                    <ActivityIndicator size="small" color="#3b82f6" />
-                </View>
-            )}
+            {loading && <Loader />}
+            
             <Button
                 text="Iniciar Sesión"
                 classname="bg-blue-500 rounded-md py-3 px-6 items-center"

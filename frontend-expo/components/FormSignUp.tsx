@@ -1,5 +1,5 @@
 import { signUp } from "@/services/auth.service";
-import { handlePreviousError, IInput } from "@/utils/constans";
+import { handlePreviousError, IInput } from "@/utils/handle-previus-error";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Alert, View } from "react-native";
@@ -7,6 +7,7 @@ import { HelperText } from "react-native-paper";
 import Button from "./Button";
 import InputField from "./InputField";
 import InputPasswordIcon from "./InputPasswordIcon";
+import Loader from "./Loader";
 
 export default function FormSignUp() {
     
@@ -91,11 +92,8 @@ export default function FormSignUp() {
             {<HelperText type="error">{errorResponse}</HelperText>}
     
     
-            {loading && (
-                <View className="flex-row justify-center items-center">
-                    <ActivityIndicator size="small" color="#3b82f6" />
-                </View>
-            )}
+            {loading && <Loader />}
+            
             <Button
                 text="Iniciar Sesión"
                 classname="bg-blue-500 rounded-md py-3 px-6 items-center"

@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import Loader from "@/components/Loader";
 import { recoverPassword } from "@/services/auth.service";
 import { Link, useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -66,11 +67,7 @@ export default function RecoverPassword() {
 
                     <HelperText type="error" visible={error !== null}>{error}</HelperText>
                     
-                    {loading && (
-                        <View className="flex-row justify-center items-center">
-                            <ActivityIndicator size="small" color="#3b82f6" />
-                        </View>
-                    )}
+                    {loading && <Loader />}
 
                     <Button 
                         text="Enviar código"

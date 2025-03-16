@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import Loader from "@/components/Loader";
 import RetrySendEmail from "@/components/RetrySendEmail";
 import { verifyEmail } from "@/services/auth.service";
 import { Ionicons } from "@expo/vector-icons";
@@ -101,11 +102,7 @@ export default function VerifyEmail() {
 
                         <HelperText type="error" visible={error !== null}>{error}</HelperText>
                         
-                        {loading && (
-                            <View className="flex-row justify-center items-center">
-                                <ActivityIndicator size="small" color="#3b82f6" />
-                            </View>
-                        )}
+                        {loading && <Loader />}
 
                         <Button 
                             text="Verificar"

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import * as SplashScreen from "expo-splash-screen";
+import Loader from "./Loader";
 
 const SplashScreenComponent = ({ onFinish }: { onFinish: () => void }) => {
   useEffect(() => {
@@ -19,6 +20,11 @@ const SplashScreenComponent = ({ onFinish }: { onFinish: () => void }) => {
         style={styles.overlay}
       />
       <Text style={styles.text}>Demo</Text>
+      <View style={{ marginTop: 100 }}>
+        <View className="flex-row justify-center items-center">
+          <ActivityIndicator size="large" color="white" />
+        </View>
+      </View>
     </View>
   );
 };

@@ -7,6 +7,7 @@ import { ActivityIndicator, Alert, View } from "react-native";
 import { HelperText, Text, TextInput } from "react-native-paper";
 import { useLocalSearchParams } from "expo-router";
 import RetrySendEmail from "@/components/RetrySendEmail";
+import Loader from "@/components/Loader";
 
 export default function VerifyPassword() {
   const [code, setCode] = useState<string>("");
@@ -75,11 +76,7 @@ export default function VerifyPassword() {
 
                     <HelperText type="error" visible={error !== null}>{error}</HelperText>
                     
-                    {loading && (
-                        <View className="flex-row justify-center items-center">
-                            <ActivityIndicator size="small" color="#3b82f6" />
-                        </View>
-                    )}
+                    {loading && <Loader />}
 
                     <Button 
                         text="Verificar"

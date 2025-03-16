@@ -1,5 +1,5 @@
 import { updatePassword } from "@/services/auth.service";
-import {IInput } from "@/utils/constans";
+import { IInput } from "@/utils/handle-previus-error";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Alert, View } from "react-native";
@@ -7,6 +7,7 @@ import { HelperText } from "react-native-paper";
 import Button from "./Button";
 import InputField from "./InputField";
 import InputPasswordIcon from "./InputPasswordIcon";
+import Loader from "./Loader";
 
 export default function FormUpdatePassword() {
     
@@ -87,11 +88,8 @@ export default function FormUpdatePassword() {
             {<HelperText type="error">{errorResponse}</HelperText>}
     
     
-            {loading && (
-                <View className="flex-row justify-center items-center">
-                    <ActivityIndicator size="small" color="#3b82f6" />
-                </View>
-            )}
+            {loading && <Loader />}
+            
             <Button
                 text="Actualizar"
                 classname="bg-blue-500 rounded-md py-3 px-6 items-center"
