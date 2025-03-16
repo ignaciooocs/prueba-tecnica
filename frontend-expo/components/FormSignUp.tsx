@@ -2,7 +2,7 @@ import { signUp } from "@/services/auth.service";
 import { handlePreviousError, IInput } from "@/utils/handle-previus-error";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, Alert, View } from "react-native";
+import { Alert, View } from "react-native";
 import { HelperText } from "react-native-paper";
 import Button from "./Button";
 import InputField from "./InputField";
@@ -45,11 +45,8 @@ export default function FormSignUp() {
                 return;
             }
 
-            Alert.alert(
-                "Registro exitoso", 
-                response.message, 
-                [{ text: "Verificar", onPress: () => router.navigate({ pathname: "/(auth)/verify-email", params: { email: userInput.email }}) }]
-            );
+            router.navigate({ pathname: "/(auth)/verify-email", params: { email: userInput.email }})
+
             setLoading(false);
         } catch (error) {
             console.log(error);
@@ -95,7 +92,7 @@ export default function FormSignUp() {
             {loading && <Loader />}
             
             <Button
-                text="Iniciar Sesión"
+                text="Registrarse"
                 classname="bg-blue-500 rounded-md py-3 px-6 items-center"
                 color="white"
                 onPress={handleSignIn}

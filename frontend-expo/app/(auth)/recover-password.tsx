@@ -1,9 +1,9 @@
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
 import { recoverPassword } from "@/services/auth.service";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ActivityIndicator, Alert, View } from "react-native";
+import { View } from "react-native";
 import { HelperText, Text, TextInput } from "react-native-paper";
 
 export default function RecoverPassword() {
@@ -30,12 +30,7 @@ export default function RecoverPassword() {
             setLoading(false);
             return;
         }
-
-        Alert.alert(
-            "Codigo enviado", 
-           response.message, 
-            [{ text: "Verificar", onPress: () => router.push({pathname: "/(auth)/verify-password", params: { email: email }}) }]
-        );
+        router.navigate({pathname: "/(auth)/verify-password", params: { email: email }})
 
         setLoading(false);
     } catch (error) {
