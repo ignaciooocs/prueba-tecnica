@@ -1,4 +1,4 @@
-export function verificationEmailHtml (code: number) {
+export function verificationEmailHtml (code: number, subject: string): string {
     return `
         <!DOCTYPE html>
             <html lang="es">
@@ -70,10 +70,10 @@ export function verificationEmailHtml (code: number) {
             <body>
             <div class="email-container">
                 <div class="header">
-                <h1>¡Bienvenido a nuestro sistema!</h1>
+                <h1>${subject}</h1>
                 </div>
                 <div class="content">
-                <p>Para continuar con el proceso de registro, por favor ingresa el siguiente código de verificación:</p>
+                <p>Para continuar con el proceso, por favor ingresa el siguiente código de verificación:</p>
                 <div class="code">${code}</div>
                 <p>Si no solicitaste este código, ignora este mensaje.</p>
                 </div>

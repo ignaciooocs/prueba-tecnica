@@ -25,7 +25,7 @@ export class EmailService {
         from: 'Código de verificación',
         to,
         subject,
-        html: verificationEmailHtml(code), // HTML será pasado como string
+        html: verificationEmailHtml(code, subject), // HTML será pasado como string
       };
   
       try {

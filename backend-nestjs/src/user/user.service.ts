@@ -2,8 +2,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { User } from './entities/user.entity';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserService {
@@ -11,7 +12,7 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User> 
   ){}
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     try {
       const user = this.userRepository.create(createUserDto);
       const savedUser = await this.userRepository.save(user);
@@ -21,7 +22,7 @@ export class UserService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<User[]> {
     try {
       return await this.userRepository.find();
     } catch (error) {
@@ -29,7 +30,7 @@ export class UserService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<User> {
     try {
       const user = await this.userRepository.findOneBy({ id });
       if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -40,25 +41,16 @@ export class UserService {
     }
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User | null> {
     try {
-      const user = await  this.userRepository.findOneBy({ email });
+      const user = await this.userRepository.findOneBy({ email });
       return user;
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
-  async findByVerificationToken(code: string) {
-    try {
-      const user = await this.userRepository.findOneBy({ verificationToken: code });
-      return user;
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  async findByCodePassword(code: string, email: string) {
+  async findByCodePassword(code: string, email: string): Promise<User | null> {
     try {
       const user = await this.findByEmail(email);
       if (!user) throw new HttpException('No se encontró el email', HttpStatus.NOT_FOUND);
@@ -71,7 +63,7 @@ export class UserService {
     }
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     try {
       const user = await this.userRepository.update(id, updateUserDto);
       return user;
@@ -80,7 +72,7 @@ export class UserService {
     }
   }
 
-  async updatePassword(email: string, password: string) {
+  async updatePassword(email: string, password: string): Promise<UpdateResult> {
     try {
       const user = await this.userRepository.update({ email }, { password }); 
       return user;
@@ -89,7 +81,13 @@ export class UserService {
     }
   }
 
-  remove(id: number) {
+  remove(id: number): Promise<DeleteResult> {
     return this.userRepository.delete(id);
+  }
+
+  async hashPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
   }
 }
