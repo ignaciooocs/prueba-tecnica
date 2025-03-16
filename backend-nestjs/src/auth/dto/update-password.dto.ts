@@ -9,4 +9,8 @@ export class UpdatePasswordDto {
     @IsNotEmpty()
     @IsString()
     password: string;
+
+    @IsNotEmpty()
+    @IsString()
+    confirmPassword: string
 }

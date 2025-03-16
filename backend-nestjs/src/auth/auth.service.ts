@@ -55,10 +55,10 @@ export class AuthService {
       const { email, password } = signInDto;
 
       const user = await this.userService.findByEmail(email);
-      if (!user) throw new HttpException('El correo o la contraseña no son validos', HttpStatus.UNAUTHORIZED);
+      if (!user) throw new HttpException('El correo o la contraseña son incorrectos', HttpStatus.UNAUTHORIZED);
 
       const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) throw new HttpException('El correo o la contraseña no son validos', HttpStatus.UNAUTHORIZED);
+      if (!isMatch) throw new HttpException('El correo o la contraseña son incorrectos', HttpStatus.UNAUTHORIZED);
     
       if (!user.isEmailVerified) {
         const subject = 'Verificación de correo';
@@ -129,10 +129,12 @@ export class AuthService {
   }
 
   async updatePassword(updatePasswordDto: UpdatePasswordDto): Promise<IPromiseResponse> {
-    const { email, password } = updatePasswordDto;
+    const { email, password, confirmPassword } = updatePasswordDto;
     try {
       const user = await this.userService.findByEmail(email);
       if (!user?.isPasswordTokenVerified) throw new HttpException('Debe verificar su correo', HttpStatus.UNAUTHORIZED);
+
+      if (password !== confirmPassword) throw new HttpException('Las contraseñas no coinciden', HttpStatus.BAD_REQUEST);
 
       const hashedPassword = await this.userService.hashPassword(password);
 
