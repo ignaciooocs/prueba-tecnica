@@ -30,6 +30,12 @@ export default function FormUpdatePassword() {
     async function handleSignIn() {
         setLoading(true);
 
+        if (!userInput.password || !userInput.confirmPassword) {
+            setErrorResponse("Todos los campos son obligatorios");
+            setLoading(false);
+            return;
+        }
+
         if (!isPasswordValid || !isConfirmPasswordValid) {
             setLoading(false);
             return;

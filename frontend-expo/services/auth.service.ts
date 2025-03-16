@@ -37,10 +37,14 @@ export async function signUp ({email, password }: { email: string, password: str
     }
 }
 
-export async function verifyEmail(code: string) {
+export async function verifyEmail({ code, email }: { code: string, email: string | string[] }) {
     try {
-        const response = await fetch(BASE_URL + 'auth/verify-email/' + code, {
-            method: 'POST'
+        const response = await fetch(BASE_URL + 'auth/verify-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, code })
         })
         const data = await response.json()
         return data
@@ -92,6 +96,23 @@ export async function updatePassword({ email, password }: { email: string, passw
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ email, password })
+        })
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+export async function retryEmail({ email, subject }: { email: string, subject: string }) {
+    try {
+        const response = await fetch(BASE_URL + 'auth/retry-code-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, subject })
         })
         const data = await response.json()
         return data

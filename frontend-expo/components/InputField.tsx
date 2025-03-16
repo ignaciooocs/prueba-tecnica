@@ -24,6 +24,7 @@ export default function InputField ({
         <View>
             <Text className="text-gray-700 font-bold mb-1">{label}</Text>
             <TextInput
+                autoCapitalize="none"
                 value={value}
                 onChangeText={onChangeText}
                 textColor="black"

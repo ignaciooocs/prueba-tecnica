@@ -44,11 +44,15 @@ export default function FormSignUp() {
                 return;
             }
 
-            Alert.alert("Exito", response.message, [{ text: "Verificar", onPress: () => router.navigate("/(auth)/verify-email") }]);
+            Alert.alert(
+                "Registro exitoso", 
+                response.message, 
+                [{ text: "Verificar", onPress: () => router.navigate({ pathname: "/(auth)/verify-email", params: { email: userInput.email }}) }]
+            );
             setLoading(false);
         } catch (error) {
             console.log(error);
-            alert("Error al iniciar sesión");
+            alert("Error en el registro");
             setLoading(false);
         }
     }

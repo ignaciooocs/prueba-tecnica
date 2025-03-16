@@ -47,14 +47,12 @@ export default function RecoverPassword() {
   return (
         <View className="h-full items-center bg-white p-4">
             <View className="h-full w-full pt-4 gap-y-4">
-                <Text variant="headlineSmall" className="text-gray-600 font-bold text-center">
-                    Recuperar contraseña
-                </Text>
 
-                <View className="justify-center items-center my-8">
-
+                <View className="justify-center items-center">
+                    <Text className="text-gray-700 font-bold mb-1 w-4/5">Correo electrónico</Text>
                     <TextInput
                         placeholder="Ingresa tu correo"
+                        autoCapitalize="none"
                         value={email}
                         onChangeText={(value) => {
                             setError(null);
@@ -63,7 +61,7 @@ export default function RecoverPassword() {
                         textColor="black"
                         activeUnderlineColor="#3b82f6"
                         keyboardType="email-address"
-                        className="bg-white rounded-md mt-4 h-12 w-2/3 border border-gray-300 text-black"
+                        className="bg-white rounded-md h-10 w-4/5 border border-gray-300 text-black"
                     />
 
                     <HelperText type="error" visible={error !== null}>{error}</HelperText>
@@ -77,14 +75,10 @@ export default function RecoverPassword() {
                     <Button 
                         text="Enviar código"
                         color="white"
-                        classname="bg-blue-500 rounded-md px-6 py-4 mt-2"
+                        classname="bg-blue-500 rounded-md px-6 py-4 mt-1"
                         onPress={handleVerification}
                         >
                     </Button>
-                </View>
-
-                <View className="flex-col h-2/5">
-                    <Text className="text-gray-700 font-bold text-center"><Link href="/" className="text-blue-500 font-bold">Volver al inicio</Link></Text>
                 </View>
             </View>
         </View>

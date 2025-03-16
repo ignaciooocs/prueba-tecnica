@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { ActivityIndicator, Alert, View } from "react-native";
 import { HelperText, Text, TextInput } from "react-native-paper";
 import { useLocalSearchParams } from "expo-router";
+import RetrySendEmail from "@/components/RetrySendEmail";
 
 export default function VerifyPassword() {
   const [code, setCode] = useState<string>("");
@@ -59,6 +60,7 @@ export default function VerifyPassword() {
                 <View className="justify-center items-center my-8">
 
                     <TextInput
+                        autoCapitalize="none"
                         placeholder="Ingresa el código"
                         value={code}
                         onChangeText={(value) => {
@@ -68,7 +70,7 @@ export default function VerifyPassword() {
                         textColor="black"
                         activeUnderlineColor="#3b82f6"
                         keyboardType="numeric"
-                        className="bg-white rounded-md mt-4 h-12 w-2/3 border border-gray-300 text-black"
+                        className="bg-white rounded-md mt-4 h-10 w-4/5 border border-gray-300 text-black"
                     />
 
                     <HelperText type="error" visible={error !== null}>{error}</HelperText>
@@ -87,6 +89,8 @@ export default function VerifyPassword() {
                         >
                     </Button>
                 </View>
+
+                <RetrySendEmail email={email as string} subject="Recuperar contraseña" />
 
                 <View className="bg-red-400 p-3 rounded-md flex-row items-center justify-center">
                     <Ionicons name="warning-outline" size={20} color="white"/>

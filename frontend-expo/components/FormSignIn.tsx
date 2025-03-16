@@ -42,7 +42,11 @@ export default function FormSignIn() {
                 setErrorResponse(response.message);
                 setLoading(false);
                 if (response.message === "Debe verificar su correo") {
-                    Alert.alert("Atención", response.message, [{ text: "Verificar", onPress: () => router.navigate("/(auth)/verify-email") }]);
+                    Alert.alert(
+                        "Atención", 
+                        response.message, 
+                        [{ text: "Verificar", onPress: () => router.navigate({ pathname: "/(auth)/verify-email", params: { email: userInput.email }}) }]
+                    );
                 }
                 return;
             }
