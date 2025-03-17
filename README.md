@@ -55,7 +55,7 @@ Esto iniciará la base de datos automáticamente, creando un contenedor con Post
 ### 🔑 Variables de Entorno  
 
 >[!CAUTION]
->Para que el sistema funcione correctamente, debes añadir las variables de entorno necesarias en el archivo `.env`.  
+>Para que el sistema funcione correctamente, debes añadir las variables de entorno necesarias en el archivo `.env` 
 
 Estas variables son necesarias para que el sistema esté autorizado para enviar correos, de lo contrario no se podrá completar el proceso de autenticación:  
 
@@ -64,7 +64,7 @@ USER_EMAIL=ejemplo@email.com
 USER_PASSWORD=password
 ```
 
-📌 **Reemplaza los valores por los que te enviará el desarrollador o usa los tuyos si los tienes.**  
+📌 **Reemplaza `ejemplo@email.com` y `password` por los valores que te enviará el desarrollador o usa los tuyos si los tienes.**  
 
 ---
 
